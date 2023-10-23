@@ -73,14 +73,15 @@ pipeline {
             }
         }
         stage("deploy"){
-        input{
-            message "Select the environment to deploy to"
-            ok "Done"
-            parameters {
-                choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: '')
-            }
-        }
-            steps{
+//         input{
+//             message "Select the environment to deploy to"
+//             ok "Done"
+//             parameters {
+//                 choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: '')
+//             }
+//         }
+            steps {
+
                 echo "deploying the application"
                 // that is a function that let me get password and username individually,
                 // what usernameVariable do, is take the username and store it on the USER
@@ -91,8 +92,16 @@ pipeline {
                 //         sh "some script ${USER} ${PWD}"
                 // }
 
-                echo "deploying version ${params.VERSIONChoice}"
-                echo "deploying to ${ENV}"
+//                 echo "deploying version ${params.VERSIONChoice}"
+//                 echo "deploying to ${ENV}"
+                script {
+                 //* to assign input parameter that user enter in, into a variable
+                     env.ENV = input message: "Select the environment to deploy to",
+                     ok: "Done",
+                     parameters: [choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: '')]
+                     echo "Deploying to ${ENV}"
+                     gv.deployApp()
+                }
             }
         }
     }
