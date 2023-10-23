@@ -73,6 +73,13 @@ pipeline {
             }
         }
         stage("deploy"){
+        input{
+            message "Select the environment to deploy to"
+            ok "Done"
+            parameters {
+                choice(name: 'ENV', choice: ['dev', 'staging', 'prod'], description: '')
+            }
+        }
             steps{
                 echo "deploying the application"
                 // that is a function that let me get password and username individually,
@@ -85,6 +92,7 @@ pipeline {
                 // }
 
                 echo "deploying version ${params.VERSIONChoice}"
+                echo "deploying to ${ENV}"
             }
         }
     }
