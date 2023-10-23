@@ -20,6 +20,7 @@
 // }
 
 // CODE_CHANGES = getGitChanges()
+def gv
 pipeline {
     agent any
     environment{
@@ -45,6 +46,13 @@ pipeline {
 //         gradle
 //     }
     stages {
+     stage("init"){
+                steps {
+                    script {
+                        gv = load "script.groovy"
+                    }
+                }
+            }
         stage("build"){
 //             when{
 //                 expression {
