@@ -1,35 +1,39 @@
+#!/usr/bin/env groovy
+// if i have a variable definition after this Library, we shouldn't put _ beside that, otherwise we should put.
+@Library('jenkins-shared-library')
+def gv
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     stages {
-      stage("test") {
+      stage("init") {
             steps {
                 script {
-                    echo "testing for $BRANCH_NAME started..."
-                    echo "testing the application..."
+                    gv = load "script.groovy"
+                }
+            }
+      }
+      stage("build jar") {
+            steps {
+                script {
+                    buildJar()
                 }
            }
         }
-        stage("build") {
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
+        stage("build image") {
             steps {
                 script {
-                    echo "building the application..."
+                    buildImage()
                 }
             }
         }
         stage("deploy"){
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                 }
-            }
+
             steps{
                 script {
-                    echo "deploying the application"
+                    gv.deployApp()
                 }
             }
         }
