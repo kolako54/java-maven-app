@@ -2,14 +2,15 @@ pipeline {
     agent any
     stages {
       stage("test") {
-                steps {
+            steps {
+                echo "testing for $BRANCH_NAME started..."
                 echo "testing the application..."
            }
         }
         stage("build") {
             when {
                 expression {
-                    BRANCH_NAME == "master"
+                    BRANCH_NAME == 'master'
                 }
             }
             steps {
@@ -19,7 +20,7 @@ pipeline {
         stage("deploy"){
             when {
                   expression {
-                    BRANCH_NAME == "master"
+                    BRANCH_NAME == 'master'
                  }
             }
             steps{
