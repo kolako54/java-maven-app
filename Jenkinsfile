@@ -3,8 +3,10 @@ pipeline {
     stages {
       stage("test") {
             steps {
-                echo "testing for $BRANCH_NAME started..."
-                echo "testing the application..."
+                script {
+                    echo "testing for $BRANCH_NAME started..."
+                    echo "testing the application..."
+                }
            }
         }
         stage("build") {
@@ -14,17 +16,21 @@ pipeline {
                 }
             }
             steps {
-                echo "building the application..."
+                script {
+                    echo "building the application..."
+                }
             }
         }
         stage("deploy"){
             when {
-                  expression {
+                expression {
                     BRANCH_NAME == 'master'
                  }
             }
             steps{
-                echo "deploying the application"
+                script {
+                    echo "deploying the application"
+                }
             }
         }
     }
