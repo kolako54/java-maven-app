@@ -1,12 +1,12 @@
 pipeline {
     agent any
-      stage("test"){
+    stages {
+      stage("test") {
                 steps {
                 echo "testing the application..."
            }
         }
-    stages {
-        stage("build"){
+        stage("build") {
             when {
                 expression {
                     BRANCH_NAME == "master"
