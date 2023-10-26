@@ -3,7 +3,7 @@
 // this is for globally
 // @Library('jenkins-shared-library')
 // for per each of project
-library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
     [
         $class: 'GitSCMSource',
         remote: 'https://github.com/kolako54/jenkins-shared-library.git',
