@@ -1,6 +1,15 @@
 #!/usr/bin/env groovy
 // if i have a variable definition after this Library, we shouldn't put _ beside that, otherwise we should put.
-@Library('jenkins-shared-library')
+// this is for globally
+// @Library('jenkins-shared-library')
+// for per each of project
+library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
+    [
+        $class: 'GitSCMSource',
+        remote: 'https://github.com/kolako54/jenkins-shared-library.git',
+        credentialsId: 'github-credentials'
+    ]
+)
 def gv
 pipeline {
     agent any
@@ -22,10 +31,13 @@ pipeline {
                 }
            }
         }
-        stage("build image") {
+        stage("build and push image") {
             steps {
                 script {
                     buildImage "kolako54/my-maven-repo:jma-3.0"
+                    dockerLogin()
+                    dockerPush "kolako54/my-maven-repo:jma-3.0"
+
                 }
             }
         }
