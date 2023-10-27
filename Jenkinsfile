@@ -31,7 +31,7 @@ pipeline {
                 }
            }
         }
-        stage("build and push imageas") {
+        stage("build and push images") {
             steps {
                 script {
                     buildImage "kolako54/my-maven-repo:jma-3.0"
